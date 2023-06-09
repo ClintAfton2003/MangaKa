@@ -64,8 +64,9 @@ export const UpdateChapter = async (req: AuthRequest, res: Response, next: NextF
     const { mangaId } = req.params;
     const manga = await MangaModel.findById(mangaId);
     if (!manga) return res.status(404).json({ message: "Not found" });
+    const { chapter } = req.body;
 
-    const newChapters = await ChapterModel.findOneAndUpdate({ manga: mangaId }, { ...req.body }, { new: true });
+    const newChapters = await ChapterModel.findOneAndUpdate({ manga: mangaId, chapter }, { ...req.body }, { new: true });
 
     res.status(200).json({
       status: "Success",
